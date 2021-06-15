@@ -11,6 +11,7 @@ public class Book {
     private String name;
     private String authorName;
     private Integer price;
+    private Integer quantity;
 
     public Book() {
     }
@@ -19,6 +20,15 @@ public class Book {
         this.name = name;
         this.authorName = authorName;
         this.price = price;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public Book(String name, String authorName, Integer price, Integer quantity) {
+        this(name, authorName, price);
+        this.quantity = quantity;
     }
 
     public String getName() {
