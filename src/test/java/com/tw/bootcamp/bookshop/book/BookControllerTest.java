@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,5 +51,33 @@ class BookControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(0));
         verify(bookService, times(1)).fetchAll();
+    }
+
+    @Test
+    void shouldListAllBooks() throws Exception {
+        List<Book> books = new ArrayList<>();
+        when(bookService.fetchAll(any())).thenReturn(books);
+
+        MockHttpServletRequestBuilder builder = get("/books")
+                .queryParam("orderByDesc", "true")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(builder)
+                .andExpect(status().isOk());
+        verify(bookService, times(1)).fetchAll(true);
+    }
+
+    @Test
+    void shouldListAllBooksForFalseOrder() throws Exception {
+        List<Book> books = new ArrayList<>();
+        when(bookService.fetchAll(any())).thenReturn(books);
+
+        MockHttpServletRequestBuilder builder = get("/books")
+                .queryParam("orderByDesc", "false")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(builder)
+                .andExpect(status().isOk());
+        verify(bookService, times(1)).fetchAll(false);
     }
 }
