@@ -17,7 +17,7 @@ public class BookController {
     }
 
     @GetMapping("/books")
-    List<Book> list(@RequestParam boolean orderByDesc) {
-        return bookService.fetchAll(orderByDesc);
+    List<Book> list(@RequestParam(required = false, defaultValue = "ASC") String orderBy,@RequestParam(required = false, defaultValue = "price") String orderByColumn, @RequestParam(required = false, defaultValue = "") String authorName) {
+        return bookService.fetchAll(orderBy, orderByColumn,authorName);
     }
 }

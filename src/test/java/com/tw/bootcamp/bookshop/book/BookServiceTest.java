@@ -48,14 +48,14 @@ class BookServiceTest {
 
     @Test
     void shouldFetchAllBooksBeSortedByPriceAsc() {
-        Book highPrice = new Book("title", "author name", 700);
-        Book lowPrice = new Book("costlier", "author name", 400);
+        Book highPrice = new Book("title", "author name1", 700);
+        Book lowPrice = new Book("costlier", "author name2", 400);
         bookRepository.save(highPrice);
         bookRepository.save(lowPrice);
 
-        List<Book> books = bookService.fetchAll(false);
+        List<Book> books = bookService.fetchAll("ASC", "price","author name2");
 
-        assertEquals(2, books.size());
+        assertEquals(1, books.size());
         assertEquals("costlier", books.get(0).getName());
     }
 }

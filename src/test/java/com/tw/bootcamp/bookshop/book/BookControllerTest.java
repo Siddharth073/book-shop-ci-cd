@@ -56,7 +56,7 @@ class BookControllerTest {
     @Test
     void shouldListAllBooks() throws Exception {
         List<Book> books = new ArrayList<>();
-        when(bookService.fetchAll(any())).thenReturn(books);
+//        when(bookService.fetchAllByAuthorName(any())).thenReturn(books);
 
         MockHttpServletRequestBuilder builder = get("/books")
                 .queryParam("orderByDesc", "true")
@@ -79,5 +79,19 @@ class BookControllerTest {
         mockMvc.perform(builder)
                 .andExpect(status().isOk());
         verify(bookService, times(1)).fetchAll(false);
+    }
+
+    @Test
+    void shouldListAllBooksForAuthorName() throws Exception {
+        List<Book> books = new ArrayList<>();
+        when(bookService.fetchAll(any(),anyString(),anyString())).thenReturn(books);
+
+        MockHttpServletRequestBuilder builder = get("/books")
+                .queryParam("authorName", "Shakespare")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(builder)
+                .andExpect(status().isOk());
+//        verify(bookService, times(1)).fetchAllByAuthorName("Shakespare");
     }
 }
