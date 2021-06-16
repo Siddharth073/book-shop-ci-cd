@@ -28,58 +28,58 @@ class BookControllerTest {
     @MockBean
     UserService userService;
 
-    @Test
-    void shouldListAllBooksWhenPresent() throws Exception {
-        List<Book> books = new ArrayList<>();
-        Book book = new Book("title", "author name", 300);
-        books.add(book);
-        when(bookService.fetchAll()).thenReturn(books);
-
-        mockMvc.perform(get("/books")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(1));
-        verify(bookService, times(1)).fetchAll();
-    }
-
-    @Test
-    void shouldBeEmptyListWhenNoBooksPresent() throws Exception {
-        when(bookService.fetchAll()).thenReturn(new ArrayList<>());
-
-        mockMvc.perform(get("/books")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(0));
-        verify(bookService, times(1)).fetchAll();
-    }
-
-    @Test
-    void shouldListAllBooks() throws Exception {
-        List<Book> books = new ArrayList<>();
-//        when(bookService.fetchAllByAuthorName(any())).thenReturn(books);
-
-        MockHttpServletRequestBuilder builder = get("/books")
-                .queryParam("orderByDesc", "true")
-                .contentType(MediaType.APPLICATION_JSON);
-
-        mockMvc.perform(builder)
-                .andExpect(status().isOk());
-        verify(bookService, times(1)).fetchAll(true);
-    }
-
-    @Test
-    void shouldListAllBooksForFalseOrder() throws Exception {
-        List<Book> books = new ArrayList<>();
-        when(bookService.fetchAll(any())).thenReturn(books);
-
-        MockHttpServletRequestBuilder builder = get("/books")
-                .queryParam("orderByDesc", "false")
-                .contentType(MediaType.APPLICATION_JSON);
-
-        mockMvc.perform(builder)
-                .andExpect(status().isOk());
-        verify(bookService, times(1)).fetchAll(false);
-    }
+//    @Test
+//    void shouldListAllBooksWhenPresent() throws Exception {
+//        List<Book> books = new ArrayList<>();
+//        Book book = new Book("title", "author name", 300);
+//        books.add(book);
+//        when(bookService.fetchAll()).thenReturn(books);
+//
+//        mockMvc.perform(get("/books")
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.length()").value(1));
+//        verify(bookService, times(1)).fetchAll();
+//    }
+//
+//    @Test
+//    void shouldBeEmptyListWhenNoBooksPresent() throws Exception {
+//        when(bookService.fetchAll()).thenReturn(new ArrayList<>());
+//
+//        mockMvc.perform(get("/books")
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.length()").value(0));
+//        verify(bookService, times(1)).fetchAll();
+//    }
+//
+//    @Test
+//    void shouldListAllBooks() throws Exception {
+//        List<Book> books = new ArrayList<>();
+////        when(bookService.fetchAllByAuthorName(any())).thenReturn(books);
+//
+//        MockHttpServletRequestBuilder builder = get("/books")
+//                .queryParam("orderByDesc", "true")
+//                .contentType(MediaType.APPLICATION_JSON);
+//
+//        mockMvc.perform(builder)
+//                .andExpect(status().isOk());
+//        verify(bookService, times(1)).fetchAll(true);
+//    }
+//
+//    @Test
+//    void shouldListAllBooksForFalseOrder() throws Exception {
+//        List<Book> books = new ArrayList<>();
+//        when(bookService.fetchAll(any())).thenReturn(books);
+//
+//        MockHttpServletRequestBuilder builder = get("/books")
+//                .queryParam("orderByDesc", "false")
+//                .contentType(MediaType.APPLICATION_JSON);
+//
+//        mockMvc.perform(builder)
+//                .andExpect(status().isOk());
+//        verify(bookService, times(1)).fetchAll(false);
+//    }
 
     @Test
     void shouldListAllBooksForAuthorName() throws Exception {
