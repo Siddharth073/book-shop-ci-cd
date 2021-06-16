@@ -11,7 +11,7 @@ gradle-build:
       - .gradle
     expire_in: 7 days
 test:
-  stage: testa
+  stage: test
   script: gradle test
   artifacts:
     when: always
